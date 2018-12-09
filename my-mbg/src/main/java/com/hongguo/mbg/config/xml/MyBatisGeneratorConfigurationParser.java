@@ -1,8 +1,6 @@
 package com.hongguo.mbg.config.xml;
 
-import com.hongguo.mbg.config.Configuration;
-import com.hongguo.mbg.config.Context;
-import com.hongguo.mbg.config.JDBCConnectionConfiguration;
+import com.hongguo.mbg.config.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -57,19 +55,43 @@ public class MyBatisGeneratorConfigurationParser {
     }
 
     private void parseTable(Context context, Node node) {
-
+        TableConfiguration tableConfiguration = new TableConfiguration();
+        NamedNodeMap attributes = node.getAttributes();
+        Node tableName = attributes.getNamedItem("tableName");
+        Node domainObjectName = attributes.getNamedItem("domainObjectName");
+        tableConfiguration.setDomainObjectName(domainObjectName.getNodeValue());
+        tableConfiguration.setTableName(tableName.getNodeValue());
+        context.addTableConfiguration(tableConfiguration);
     }
 
     private void parseJavaClientGenerator(Context context, Node node) {
-
+        JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
+        NamedNodeMap attributes = node.getAttributes();
+        Node targetPackage = attributes.getNamedItem("targetPackage");
+        Node targetProject = attributes.getNamedItem("targetProject");
+        javaClientGeneratorConfiguration.setTargetPackage(targetPackage.getNodeValue());
+        javaClientGeneratorConfiguration.setTargetProject(targetProject.getNodeValue());
+        context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
     }
 
     private void parseSqlMapGenerator(Context context, Node node) {
-
+        SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
+        NamedNodeMap attributes = node.getAttributes();
+        Node targetPackage = attributes.getNamedItem("targetPackage");
+        Node targetProject = attributes.getNamedItem("targetProject");
+        sqlMapGeneratorConfiguration.setTargetPackage(targetPackage.getNodeValue());
+        sqlMapGeneratorConfiguration.setTargetProject(targetProject.getNodeValue());
+        context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
     }
 
     private void parseJavaModelGenerator(Context context, Node node) {
-
+        JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
+        NamedNodeMap attributes = node.getAttributes();
+        Node targetPackage = attributes.getNamedItem("targetPackage");
+        Node targetProject = attributes.getNamedItem("targetProject");
+        javaModelGeneratorConfiguration.setTargetPackage(targetPackage.getNodeValue());
+        javaModelGeneratorConfiguration.setTargetProject(targetProject.getNodeValue());
+        context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
     }
 
     private void parseJdbcConnection(Context context, Node node) {
